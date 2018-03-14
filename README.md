@@ -78,6 +78,11 @@ output: {
 },
 ```
 
+##### vue专属插件支持
+
+基于axios/vue-router/vuex构建目录结构
+
+
 ### 编译
 
 ``` bash
