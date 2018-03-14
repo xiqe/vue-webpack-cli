@@ -8,15 +8,14 @@ module.exports = {
     devtool: 'inline-source-map',
 
     entry:{
-        index: './src/index.js',
-        test: './src/test.js'
+        index: './src/index.js'
     },
 
     output: {
-        path: path.resolve(__dirname, '../dist/'),
+        path: path.resolve(__dirname, 'dist/'),
         publicPath: "/",
-        filename: 'js/' + timeStamp + '.[name].js'
-        //filename: 'js/[name].js'
+        // filename: 'js/' + timeStamp + '.[name].js'
+        filename: 'js/[name].js'
     },
 
     devServer: {
@@ -33,8 +32,8 @@ module.exports = {
          	except: ['$super', '$', 'exports', 'require'] //排除关键字
          }),
 
-        //new ExtractTextPlugin('css/[name].css')
-        new ExtractTextPlugin('css/' + timeStamp + '.[name].css') //去缓存
+        new ExtractTextPlugin('css/[name].css')
+        // new ExtractTextPlugin('css/' + timeStamp + '.[name].css')
     ],
 
     module: {
@@ -51,7 +50,7 @@ module.exports = {
                 loader: ExtractTextPlugin.extract('style', 'css')
             },{
                 test: /\.(png|jpe?g|gif)(\?.*)?$/,
-                loader: 'url?limit=2048&name=images/[name]_[hash:4].[ext]'
+                loader: 'url?limit=4096&name=img/[name]_[hash:4].[ext]'
             }, {
                 test: /\.(woff|eot|ttf|otf|svg)(\?.*)?$/,
                 loader: 'url',

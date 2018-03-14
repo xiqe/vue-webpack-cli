@@ -20,79 +20,78 @@ $ npm install
 
 ### 本地开发环境
 
-- 启动compass监听
+- 启动webpack监听
 
     ``` bash
-    $ compass watch
+    webpack -w
     ```
 
-- 启动本地开发服务器
+- 启动本地开发环境
 
     ``` bash
-    $ npm run start
+    cd page
     ```
-    浏览器打开`http://localhost:3005/pages/*.html`即可访问。
+    浏览器打开page下的页面即可访问。
 
 ### 业务开发
 
 ##### 目录结构
 
 ``` js
-- root/
+- vue-webpack-cli/         # 项目名称
   - src/                   # 开发目录
     + resources/           # 资源目录
-        + css/                 # css资源
+        + less/                # css资源
         + img/                 # 图片资源
         + js/                  # js&jsx资源
-        + scss/                # scss资源
-        + tmpl/                # 前端模板
-    + pages/               # 页面目录
-        a.html                 # 入口文件a
-        b.html                 # 入口文件b
     + components/           # 公共组建目录
+    + api/                  # api接口目录
+    + view/                 # vue页面template目录
+    + vuex/                 # vuex目录
   + dist/                # 编译输出目录
-  + mock/                  # 假数据文件
+  + page/                  # 本地静态页面入口
   app.js                   # 本地server入口
-  routes.js                # 本地路由配置
   webpack.config.js        # webpack配置文件
-  webpack-dev.config.js    # 开发环境webpack配置文件
-  gulpfile.js              # gulp任务配置
-  config.rb                # compass配置
   package.json             # 项目配置
   README.md                # 项目说明
 ```
 
 ##### 单/多页面支持
 
-约定`/src/pages/*.html`为应用的入口文件，在`/src/resources/js/`一级目录下有一个同名的js文件作为该入口文件的逻辑入口（即entry）。
+约定`/page/**/*.html`为应用的入口文件，在`/src/`一级目录下有一个同名的js文件作为该入口文件的逻辑入口（即entry）。
 
 在编译时会扫描入口html文件并且根据webpack配置项解决entry的路径依赖，同时还会对html文件进行压缩、字符替换等处理。
 
 这样可以做到同时支持SPA和多页面型的项目。
 
+
+``` js
+entry:{
+    index: './src/index.js',
+    main: './src/main.js'
+},
+
+output: {
+    path: path.resolve(__dirname, 'dist/'),
+    publicPath: "/",
+    filename: 'js/[name].js'
+},
+```
+
 ### 编译
 
 ``` bash
-$ npm run build
+$ webpack build
 ```
 
 ### 部署&发布
 
 纯静态页面型的应用，最简单的做法是直接把`dist`文件夹部署到指定机器即可（先配置好机器ip、密码、上传路径等信息）：
 
-``` js
-$ npm run deploy # or run `gulp deploy`
-```
-
-如果需要将生成的js、css、图片等发布到cdn，修改下`publicPath`项为目标cdn地址即可：
+如果需要将生成增量的js、css、图片等发布到cdn，修改下webpack.config.js 项为增量自定义版本号即可：
 
 ``` js
-...
-output: {
-  ...
-  publicPath: debug ? '/__build/' : 'http://cdn.site.com/'
-}
-...
+const timeStamp = '20180308';
 ```
 
 ### License
