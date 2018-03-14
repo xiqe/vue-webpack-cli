@@ -9,14 +9,6 @@
   import store from '../../vuex/store'
 
   export default {
-    created(){
-        store.commit('LOAD_STATUS',false);
-    },
-
-    mounted(){
-        this.showLoading();
-    },
-
     methods:{
         showLoading: function(){
             store.commit('LOAD_STATUS',true);
